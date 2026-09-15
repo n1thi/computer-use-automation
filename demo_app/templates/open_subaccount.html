@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Open Sub-account</h1>
+
+<div class="summary">
+    Member: <strong>{{ member_id }}</strong> — {{ member.name }}
+</div>
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+<div class="panel">
+    <div class="panel-title">New Account Information</div>
+
+    <form action="/members/{{ member_id }}/subaccounts/review" method="post">
+        <table class="form-table">
+            <tr>
+                <td>Account Type</td>
+                <td>
+                    <label>
+                        <input type="radio" name="account_type" value="savings" required>
+                        Savings
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="account_type" value="checking">
+                        Checking
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="nickname">Nickname</label></td>
+                <td><input id="nickname" name="nickname" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit">Continue</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<p><a href="/members/{{ member_id }}">Cancel and return to member</a></p>
+{% endblock %}

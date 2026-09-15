@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Review New Sub-account</h1>
+
+<div class="notice">
+    Review the information below. This demo intentionally stops before any irreversible action.
+</div>
+
+<div class="panel">
+    <div class="panel-title">Account Review</div>
+
+    <table class="data-table">
+        <tr><th>Member ID</th><td>{{ member_id }}</td></tr>
+        <tr><th>Member Name</th><td>{{ member.name }}</td></tr>
+        <tr><th>Account Type</th><td>{{ account_type }}</td></tr>
+        <tr><th>Nickname</th><td>{{ nickname }}</td></tr>
+        <tr><th>Status</th><td>Ready for final approval</td></tr>
+    </table>
+</div>
+
+<div class="checkpoint">
+    CHECKPOINT: REVIEW_READY
+</div>
+
+<p>
+    <a href="/members/{{ member_id }}">Return to member</a>
+</p>
+{% endblock %}

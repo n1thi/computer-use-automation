@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Member Search Result</h1>
+
+<div class="error-box">
+    <strong>Member not found.</strong><br>
+    No member record exists for ID {{ member_id }}.
+</div>
+
+<div class="business-outcome">
+    OUTCOME: MEMBER_NOT_FOUND
+</div>
+
+<p><a href="/">Return to Member Search</a></p>
+{% endblock %}

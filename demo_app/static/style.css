@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background: #d9d9d9;
+    margin: 0;
+    padding: 20px;
+}
+
+.shell {
+    width: 900px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #777;
+}
+
+.topbar {
+    padding: 12px 16px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+}
+
+.layout-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-height: 540px;
+}
+
+.sidebar {
+    width: 180px;
+    vertical-align: top;
+    background: #efefef;
+    border-right: 1px solid #aaa;
+    padding: 12px;
+}
+
+.sidebar a,
+.sidebar span {
+    display: block;
+    padding: 6px 4px;
+}
+
+.nav-heading {
+    font-weight: bold;
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 5px;
+}
+
+.nav-heading.second {
+    margin-top: 20px;
+}
+
+.content {
+    vertical-align: top;
+    padding: 24px;
+}
+
+h1 {
+    font-size: 21px;
+    margin-top: 0;
+    border-bottom: 1px solid #999;
+    padding-bottom: 6px;
+}
+
+.panel {
+    border: 1px solid #999;
+    margin: 16px 0;
+}
+
+.panel-title {
+    font-weight: bold;
+    background: #e6e6e6;
+    border-bottom: 1px solid #999;
+    padding: 7px 10px;
+}
+
+.form-table,
+.data-table {
+    border-collapse: collapse;
+    margin: 14px;
+}
+
+.form-table td {
+    padding: 7px 10px;
+    vertical-align: top;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #aaa;
+    padding: 7px 10px;
+    text-align: left;
+}
+
+.data-table th {
+    background: #f2f2f2;
+}
+
+.data-table.wide {
+    width: calc(100% - 28px);
+}
+
+input[type="text"] {
+    width: 230px;
+    padding: 5px;
+}
+
+button,
+.button-link {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid #555;
+    background: #ededed;
+    color: #111;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.button-link:hover {
+    background: #ddd;
+}
+
+.help,
+.summary,
+.notice,
+.error-box,
+.business-outcome,
+.checkpoint {
+    padding: 10px;
+    margin: 14px 0;
+    border: 1px solid #aaa;
+}
+
+.error-box {
+    border: 2px solid #777;
+    background: #f3f3f3;
+}
+
+.business-outcome,
+.checkpoint {
+    font-family: monospace;
+    font-weight: bold;
+    background: #f7f7f7;
+}
+
+.footer {
+    border-top: 1px solid #aaa;
+    background: #efefef;
+    padding: 8px 12px;
+    font-size: 12px;
+}

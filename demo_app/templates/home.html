@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Member Search</h1>
+
+<div class="panel">
+    <div class="panel-title">Search Criteria</div>
+
+    <form action="/members/search" method="post">
+        <table class="form-table">
+            <tr>
+                <td><label for="member_id">Member ID</label></td>
+                <td><input id="member_id" name="member_id" type="text" autocomplete="off" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="submit">Search Member</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="help">
+    Demo members: <strong>12345</strong>, <strong>56789</strong>.
+    Use <strong>99999</strong> to simulate a member-not-found business outcome.
+</div>
+{% endblock %}
