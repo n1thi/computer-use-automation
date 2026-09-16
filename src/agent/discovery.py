@@ -29,6 +29,7 @@ class DiscoveryRunResult(BaseModel):
     message: str | None = None
     log_path: str | None = None
     screenshot_path: str | None = None
+    artifact_path: str | None = None
 
 
 class DiscoveryRunner:
