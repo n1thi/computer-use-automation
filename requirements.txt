@@ -3,3 +3,4 @@
 pydantic>=2,<3
 pytest>=8,<9
 playwright>=1.50,<2
+openai>=1.73,<3

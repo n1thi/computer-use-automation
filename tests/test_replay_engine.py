@@ -3,6 +3,7 @@ from pathlib import Path
 from src.artifact.models import RunStatus, Target
 from src.replay.engine import ReplayEngine
 from src.surface.base import Surface
+from src.surface.models import PageObservation
 
 
 class FakeSurface(Surface):
@@ -10,6 +11,18 @@ class FakeSurface(Surface):
         self.calls: list[tuple] = []
         self.business_outcome = business_outcome
         self._current_url = ""
+
+    def observe(
+        self,
+        max_text_chars: int = 5000,
+        max_elements: int = 50,
+    ) -> PageObservation:
+        return PageObservation(
+            url=self._current_url,
+            title="Fake Page",
+            visible_text="",
+            interactive_elements=[],
+        )
 
     def open(self, url: str) -> None:
         self._current_url = url

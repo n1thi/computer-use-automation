@@ -15,6 +15,7 @@ from playwright.sync_api import (
 
 from src.artifact.models import Target
 from src.surface.base import Surface
+from src.surface.models import ObservedElement, PageObservation
 
 
 class PlaywrightSurface(Surface):
@@ -32,7 +33,10 @@ class PlaywrightSurface(Surface):
     def _locator(self, target: Target) -> Locator:
         if target.role:
             if target.name:
-                return self._page.get_by_role(target.role, name=self._pattern(target.name))
+                return self._page.get_by_role(
+                    target.role,
+                    name=self._pattern(target.name),
+                )
             return self._page.get_by_role(target.role)
 
         if target.label:
@@ -43,7 +47,8 @@ class PlaywrightSurface(Surface):
 
         if target.stable_attribute:
             selector = "".join(
-                f'[{key}="{value}"]' for key, value in target.stable_attribute.items()
+                f'[{key}="{value}"]'
+                for key, value in target.stable_attribute.items()
             )
             return self._page.locator(selector)
 
@@ -60,6 +65,132 @@ class PlaywrightSurface(Surface):
 
     def open(self, url: str) -> None:
         self._page.goto(url, wait_until="domcontentloaded")
+
+    def observe(
+        self,
+        max_text_chars: int = 5000,
+        max_elements: int = 50,
+    ) -> PageObservation:
+        try:
+            visible_text = self._page.locator("body").inner_text(timeout=3000)
+        except Exception:
+            visible_text = ""
+
+        visible_text = visible_text[:max_text_chars]
+
+        raw_elements = self._page.evaluate(
+            """
+            (maxElements) => {
+              function isVisible(el) {
+                const style = window.getComputedStyle(el);
+                const rect = el.getBoundingClientRect();
+                return (
+                  style.visibility !== "hidden" &&
+                  style.display !== "none" &&
+                  rect.width > 0 &&
+                  rect.height > 0
+                );
+              }
+
+              function labelFor(el) {
+                if (el.id) {
+                  const explicit = document.querySelector(
+                    `label[for="${CSS.escape(el.id)}"]`
+                  );
+                  if (explicit) return explicit.innerText.trim();
+                }
+
+                const parentLabel = el.closest("label");
+                if (parentLabel) return parentLabel.innerText.trim();
+
+                return null;
+              }
+
+              function inferredRole(el) {
+                const explicit = el.getAttribute("role");
+                if (explicit) return explicit;
+
+                const tag = el.tagName.toLowerCase();
+                if (tag === "button") return "button";
+                if (tag === "a" && el.getAttribute("href")) return "link";
+                if (tag === "textarea") return "textbox";
+                if (tag === "select") return "combobox";
+
+                if (tag === "input") {
+                  const type = (el.getAttribute("type") || "text").toLowerCase();
+                  if (type === "radio") return "radio";
+                  if (type === "checkbox") return "checkbox";
+                  if (["submit", "button", "reset"].includes(type)) return "button";
+                  return "textbox";
+                }
+
+                return null;
+              }
+
+              function accessibleName(el, label, text) {
+                return (
+                  el.getAttribute("aria-label") ||
+                  label ||
+                  el.getAttribute("placeholder") ||
+                  el.getAttribute("title") ||
+                  text ||
+                  el.getAttribute("name") ||
+                  null
+                );
+              }
+
+              const selector = [
+                "a[href]",
+                "button",
+                "input",
+                "select",
+                "textarea",
+                "[role]"
+              ].join(",");
+
+              return Array.from(document.querySelectorAll(selector))
+                .filter(isVisible)
+                .slice(0, maxElements)
+                .map((el, index) => {
+                  const tag = el.tagName.toLowerCase();
+                  const text = (el.innerText || "").trim() || null;
+                  const label = labelFor(el);
+                  const role = inferredRole(el);
+
+                  return {
+                    index,
+                    tag,
+                    role,
+                    name: accessibleName(el, label, text),
+                    label,
+                    text,
+                    input_type:
+                      tag === "input"
+                        ? (el.getAttribute("type") || "text").toLowerCase()
+                        : null,
+                    checked:
+                      (tag === "input" &&
+                       ["checkbox", "radio"].includes(
+                         (el.getAttribute("type") || "").toLowerCase()
+                       ))
+                        ? Boolean(el.checked)
+                        : null,
+                    disabled: Boolean(el.disabled)
+                  };
+                });
+            }
+            """,
+            max_elements,
+        )
+
+        elements = [ObservedElement.model_validate(item) for item in raw_elements]
+
+        return PageObservation(
+            url=self._page.url,
+            title=self._page.title(),
+            visible_text=visible_text,
+            interactive_elements=elements,
+        )
 
     def click(self, target: Target, timeout_ms: int = 5000) -> None:
         self._locator(target).first.click(timeout=timeout_ms)
