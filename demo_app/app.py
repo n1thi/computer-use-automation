@@ -37,7 +37,6 @@ def home(request: Request):
 def search_member(request: Request, member_id: str = Form(...)):
     member_id = member_id.strip()
 
-    # Explicit demo failure case requested for the take-home.
     if member_id == "99999" or member_id not in MEMBERS:
         return templates.TemplateResponse(
             request=request,
@@ -86,7 +85,10 @@ def member_detail(request: Request, member_id: str):
     )
 
 
-@app.get("/members/{member_id}/subaccounts/new", response_class=HTMLResponse)
+@app.get(
+    "/members/{member_id}/subaccounts/new",
+    response_class=HTMLResponse,
+)
 def new_subaccount(request: Request, member_id: str):
     member = MEMBERS.get(member_id)
 
@@ -112,7 +114,10 @@ def new_subaccount(request: Request, member_id: str):
     )
 
 
-@app.post("/members/{member_id}/subaccounts/review", response_class=HTMLResponse)
+@app.post(
+    "/members/{member_id}/subaccounts/review",
+    response_class=HTMLResponse,
+)
 def review_subaccount(
     request: Request,
     member_id: str,
@@ -155,5 +160,34 @@ def review_subaccount(
             "member": member,
             "account_type": account_type.title(),
             "nickname": nickname.strip() or "(none)",
+        },
+    )
+
+
+@app.post(
+    "/members/{member_id}/subaccounts/create",
+    response_class=HTMLResponse,
+)
+def create_subaccount_demo(request: Request, member_id: str):
+    member = MEMBERS.get(member_id)
+
+    if not member:
+        return templates.TemplateResponse(
+            request=request,
+            name="not_found.html",
+            context={
+                "page_title": "Member Search",
+                "member_id": member_id,
+            },
+            status_code=404,
+        )
+
+    return templates.TemplateResponse(
+        request=request,
+        name="created.html",
+        context={
+            "page_title": "Sub-account Created",
+            "member_id": member_id,
+            "member": member,
         },
     )

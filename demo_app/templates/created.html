@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sub-account Created</h1>
+
+<div class="notice">
+    Demo only. No real account was created.
+</div>
+
+<div class="panel">
+    <div class="panel-title">Result</div>
+    <table class="data-table">
+        <tr><th>Member ID</th><td>{{ member_id }}</td></tr>
+        <tr><th>Member Name</th><td>{{ member.name }}</td></tr>
+        <tr><th>Status</th><td>Simulated account creation complete</td></tr>
+    </table>
+</div>
+
+<div class="checkpoint">
+    CHECKPOINT: ACCOUNT_CREATED
+</div>
+
+<p>
+    <a href="/members/{{ member_id }}">Return to member</a>
+</p>
+{% endblock %}

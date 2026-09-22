@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "artifact_version": "1.0-handoff-demo",
+  "name": "open_sub_account",
+  "description": "Search for a member, open the new sub-account flow, choose an account type, and reach the review screen without performing the irreversible final account-creation action. This demo variant includes a simulated final action that must be completed by a human.",
+  "target_application": "mock_credit_union",
+  "entry_url": "http://127.0.0.1:8000",
+  "inputs": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "description": "Member identifier used for lookup.",
+      "required": true,
+      "sensitive": true,
+      "allowed_values": null
+    },
+    {
+      "name": "account_type",
+      "type": "enum",
+      "description": "Type of sub-account to open.",
+      "required": true,
+      "sensitive": false,
+      "allowed_values": [
+        "checking",
+        "savings"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "review_status",
+      "type": "string",
+      "description": "Status after reaching the review checkpoint.",
+      "sensitive": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "step_1",
+      "description": "Enter the requested member ID.",
+      "action": {
+        "type": "type",
+        "value": "${member_id}",
+        "timeout_ms": 5000
+      },
+      "target": {
+        "role": "textbox",
+        "name": "Member ID",
+        "label": null,
+        "text": null,
+        "stable_attribute": null,
+        "css": null,
+        "xpath": null,
+        "description": null
+      },
+      "checkpoint": null
+    },
+    {
+      "id": "step_2",
+      "description": "Submit the member ID search.",
+      "action": {
+        "type": "click",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "target": {
+        "role": "button",
+        "name": "Search Member",
+        "label": null,
+        "text": null,
+        "stable_attribute": null,
+        "css": null,
+        "xpath": null,
+        "description": null
+      },
+      "checkpoint": null
+    },
+    {
+      "id": "step_3",
+      "description": "Open the new sub-account workflow for member ${member_id}.",
+      "action": {
+        "type": "click",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "target": {
+        "role": "link",
+        "name": "Open New Sub-account",
+        "label": null,
+        "text": null,
+        "stable_attribute": null,
+        "css": null,
+        "xpath": null,
+        "description": null
+      },
+      "checkpoint": null
+    },
+    {
+      "id": "step_4",
+      "description": "Select the requested ${account_type} account type.",
+      "action": {
+        "type": "click",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "target": {
+        "role": "radio",
+        "name": "${account_type}",
+        "label": null,
+        "text": null,
+        "stable_attribute": null,
+        "css": null,
+        "xpath": null,
+        "description": null
+      },
+      "checkpoint": null
+    },
+    {
+      "id": "step_5",
+      "description": "Continue with the selected ${account_type} account to reach the review screen.",
+      "action": {
+        "type": "click",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "target": {
+        "role": "button",
+        "name": "Continue",
+        "label": null,
+        "text": null,
+        "stable_attribute": null,
+        "css": null,
+        "xpath": null,
+        "description": null
+      },
+      "checkpoint": null
+    },
+    {
+      "id": "step_human_final_approval",
+      "description": "Simulated irreversible final account creation. Execution policy must require a human handoff.",
+      "action": {
+        "type": "click",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "target": {
+        "role": "button",
+        "name": "Create Account",
+        "label": null,
+        "text": null,
+        "stable_attribute": null,
+        "css": null,
+        "xpath": null,
+        "description": "Simulated final account creation"
+      },
+      "checkpoint": null
+    }
+  ],
+  "success_checkpoint": {
+    "type": "text_present",
+    "value": "CHECKPOINT: ACCOUNT_CREATED",
+    "target": null,
+    "description": "Confirms the human completed the simulated final action."
+  },
+  "known_business_outcomes": [
+    "MEMBER_NOT_FOUND"
+  ]
+}

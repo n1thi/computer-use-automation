@@ -2,37 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ page_title }} - Legacy Credit Union Admin</title>
+    <title>{{ page_title }} - Legacy Credit Union</title>
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
 <body>
-    <div class="shell">
-        <div class="topbar">
-            <strong>Legacy Credit Union Administration System</strong>
-        </div>
-
-        <table class="layout-table">
-            <tr>
-                <td class="sidebar">
-                    <div class="nav-heading">Member Services</div>
-                    <a href="/">Member Search</a>
-                    <span>Account Maintenance</span>
-                    <span>Transaction Inquiry</span>
-
-                    <div class="nav-heading second">Operations</div>
-                    <span>Daily Reports</span>
-                    <span>Supervisor Queue</span>
-                </td>
-
-                <td class="content">
-                    {% block content %}{% endblock %}
-                </td>
-            </tr>
-        </table>
-
-        <div class="footer">
-            Demo environment — do not enter real customer information.
-        </div>
-    </div>
+<div class="shell">
+    <div class="topbar">Legacy Credit Union Admin</div>
+    <table class="layout-table">
+        <tr>
+            <td class="sidebar">
+                <div class="nav-heading">Member Services</div>
+                <a href="/">Member Search</a>
+                <div class="nav-heading second">Session</div>
+                <span>Training Environment</span>
+            </td>
+            <td class="content">
+                {% block content %}{% endblock %}
+            </td>
+        </tr>
+    </table>
+    <div class="footer">Local demonstration application</div>
+</div>
 </body>
 </html>

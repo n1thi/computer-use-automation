@@ -1,0 +1,17 @@
+{"event": "run_started", "capability": "open_sub_account", "artifact_version": "1.0", "input_names": ["account_type", "member_id"]}
+{"event": "step_started", "step_id": "step_1", "action": "type"}
+{"event": "step_completed", "step_id": "step_1"}
+{"event": "step_started", "step_id": "step_2", "action": "click"}
+{"event": "step_completed", "step_id": "step_2"}
+{"event": "step_started", "step_id": "step_3", "action": "click"}
+{"event": "step_completed", "step_id": "step_3"}
+{"event": "step_started", "step_id": "step_4", "action": "click"}
+{"event": "step_completed", "step_id": "step_4"}
+{"event": "step_started", "step_id": "step_5", "action": "click"}
+{"event": "step_completed", "step_id": "step_5"}
+{"event": "run_complete", "status": "success", "recovered_conditions": 0, "handoffs_completed": 0}
+{"event": "run_started", "capability": "open_sub_account", "artifact_version": "1.0", "input_names": ["account_type", "member_id"]}
+{"event": "step_started", "step_id": "step_1", "action": "type"}
+{"event": "business_outcome", "code": "MEMBER_NOT_FOUND", "step_id": "step_1"}
+{"event": "run_started", "capability": "open_sub_account", "artifact_version": "1.0", "input_names": ["account_type", "member_id"]}
+{"event": "hard_failure", "code": "INVALID_INPUT", "message": "'account_type' must be one of: checking, savings."}

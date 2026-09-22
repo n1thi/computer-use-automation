@@ -1,0 +1,4 @@
+{"event": "run_started", "capability": "retry_test", "artifact_version": "1.0", "input_names": []}
+{"event": "recoverable_condition", "step_id": "final_checkpoint", "condition": "checkpoint_not_ready", "attempt": 1, "next_action": "wait_and_retry"}
+{"event": "recoverable_condition_recovered", "step_id": "final_checkpoint", "condition": "checkpoint_not_ready", "attempt": 2}
+{"event": "run_complete", "status": "success", "recovered_conditions": 1, "handoffs_completed": 0}

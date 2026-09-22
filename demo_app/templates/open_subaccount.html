@@ -3,31 +3,19 @@
 {% block content %}
 <h1>Open Sub-account</h1>
 
-<div class="summary">
-    Member: <strong>{{ member_id }}</strong> — {{ member.name }}
-</div>
-
-{% if error %}
-<div class="error-box">{{ error }}</div>
-{% endif %}
-
 <div class="panel">
-    <div class="panel-title">New Account Information</div>
-
-    <form action="/members/{{ member_id }}/subaccounts/review" method="post">
+    <div class="panel-title">New Sub-account</div>
+    <form method="post" action="/members/{{ member_id }}/subaccounts/review">
         <table class="form-table">
+            <tr>
+                <td>Member</td>
+                <td>{{ member.name }} ({{ member_id }})</td>
+            </tr>
             <tr>
                 <td>Account Type</td>
                 <td>
-                    <label>
-                        <input type="radio" name="account_type" value="savings" required>
-                        Savings
-                    </label>
-                    <br>
-                    <label>
-                        <input type="radio" name="account_type" value="checking">
-                        Checking
-                    </label>
+                    <label><input type="radio" name="account_type" value="checking" required> Checking</label><br>
+                    <label><input type="radio" name="account_type" value="savings"> Savings</label>
                 </td>
             </tr>
             <tr>
@@ -42,5 +30,7 @@
     </form>
 </div>
 
-<p><a href="/members/{{ member_id }}">Cancel and return to member</a></p>
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
 {% endblock %}

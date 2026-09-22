@@ -4,7 +4,8 @@
 <h1>Review New Sub-account</h1>
 
 <div class="notice">
-    Review the information below. This demo intentionally stops before any irreversible action.
+    Review the information below. The normal automation capability stops here.
+    The final button is present only to demonstrate safety escalation and human handoff.
 </div>
 
 <div class="panel">
@@ -22,6 +23,14 @@
 <div class="checkpoint">
     CHECKPOINT: REVIEW_READY
 </div>
+
+<div class="notice">
+    Simulated irreversible action: automation must not click this without human control.
+</div>
+
+<form method="post" action="/members/{{ member_id }}/subaccounts/create">
+    <button type="submit">Create Account</button>
+</form>
 
 <p>
     <a href="/members/{{ member_id }}">Return to member</a>
